@@ -17,10 +17,14 @@ class TodoList extends Component {
             value={this.state.inputValue}
             onChange={this.handleInputChange.bind(this)}
           />{" "}
-          <button>submit</button>{" "}
+          <button onClick={this.handleBtnClick.bind(this)}>submit</button>{" "}
         </div>
         <ul>
-          <li>learing english</li>
+          {this.state.list.map((item, index) => {
+            return (
+              <li onClick={this.handleItemDelete.bind(this, index)}>{item}</li>
+            );
+          })}
         </ul>
       </Fragment>
     );
@@ -30,6 +34,21 @@ class TodoList extends Component {
       inputValue: e.target.value
     });
     // console.log(e.target.value);
+  }
+
+  handleBtnClick() {
+    this.setState({
+      list: [...this.state.list, this.state.inputValue],
+      inputValue: ""
+    });
+  }
+
+  handleItemDelete(index) {
+    const list = [...this.state.list];
+    list.splice(index, 1);
+    this.setState({
+      list: list
+    });
   }
 }
 
