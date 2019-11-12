@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import TodoItem from "./TodoItem";
+import Test from "./Test";
 import "./App.css";
+
 class TodoList extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +26,7 @@ class TodoList extends Component {
           <button onClick={this.handleBtnClick}>submit</button>{" "}
         </div>
         <ul>{this.getTodoItem()}</ul>
+        <Test content={this.state.inputValue} />
       </Fragment>
     );
   }
