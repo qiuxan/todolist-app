@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import TodoItem from "./TodoItem";
-import Test from "./Test";
 import "./App.css";
 
 class TodoList extends Component {
@@ -22,11 +21,13 @@ class TodoList extends Component {
             type="text"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
+            ref={input => {
+              this.input = input;
+            }}
           />{" "}
           <button onClick={this.handleBtnClick}>submit</button>{" "}
         </div>
         <ul>{this.getTodoItem()}</ul>
-        <Test content={this.state.inputValue} />
       </Fragment>
     );
   }
@@ -43,8 +44,8 @@ class TodoList extends Component {
       );
     });
   }
-  handleInputChange(e) {
-    const value = e.target.value;
+  handleInputChange() {
+    const value = this.input.value;
 
     this.setState(() => ({
       inputValue: value
