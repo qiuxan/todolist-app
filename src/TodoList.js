@@ -27,7 +27,13 @@ class TodoList extends Component {
           />{" "}
           <button onClick={this.handleBtnClick}>submit</button>{" "}
         </div>
-        <ul>{this.getTodoItem()}</ul>
+        <ul
+          ref={ul => {
+            this.ul = ul;
+          }}
+        >
+          {this.getTodoItem()}
+        </ul>
       </Fragment>
     );
   }
@@ -53,12 +59,15 @@ class TodoList extends Component {
   }
 
   handleBtnClick() {
-    this.setState(prevState => {
-      return {
+    this.setState(
+      prevState => ({
         list: [...prevState.list, prevState.inputValue],
         inputValue: ""
-      };
-    });
+      }),
+      () => {
+        console.log(this.ul.querySelectorAll("div").length);
+      }
+    );
   }
 
   handleItemDelete(index) {
