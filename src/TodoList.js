@@ -13,7 +13,13 @@ class TodoList extends Component {
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleItemDelete = this.handleItemDelete.bind(this);
   }
+
+  //excute at the moment the components will be loaded to the page
+  componentWillMount() {
+    console.log("componentwillmount");
+  }
   render() {
+    console.log("render");
     return (
       <Fragment>
         <div>
@@ -38,6 +44,15 @@ class TodoList extends Component {
     );
   }
 
+  //excude when page finished loading
+  componentDidMount() {
+    console.log("componentDidMount");
+  }
+  //excute before updating component
+  shouldComponentUpdate() {
+    console.log("shouldComponentUpdate");
+    return true;
+  }
   getTodoItem() {
     return this.state.list.map((item, index) => {
       return (
