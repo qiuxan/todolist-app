@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import axios from "axios";
 import TodoItem from "./TodoItem";
 import "./App.css";
 
@@ -37,6 +38,20 @@ class TodoList extends Component {
         </ul>
       </Fragment>
     );
+  }
+
+  componentDidMount() {
+    axios
+      .get("todolist.json")
+      .then(res => {
+        console.log(res.data);
+        this.setState(() => {
+          return { list: res.data };
+        });
+      })
+      .catch(() => {
+        alert("error");
+      });
   }
 
   getTodoItem() {
