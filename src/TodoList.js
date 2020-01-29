@@ -3,19 +3,34 @@ import "antd/dist/antd.css";
 import { Input, Button, List, Typography } from "antd";
 import store from "./store";
 
-const data = [
-  "Racing car sprays burning fuel into crowd.",
-  "Japanese princess to wed commoner.",
-  "Australian walks 100km after outback crash.",
-  "Man charged over missing wedding girl.",
-  "Los Angeles battles huge wildfires."
-];
-
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
-    console.log(this.state);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleStoreChange = this.handleStoreChange.bind(this);
+    this.handleBtnClick = this.handleBtnClick.bind(this);
+
+    store.subscribe(this.handleStoreChange);
+  }
+
+  handleStoreChange() {
+    this.setState(store.getState());
+  }
+
+  handleInputChange(e) {
+    const action = {
+      type: "change_input_value",
+      value: e.target.value
+    };
+    store.dispatch(action);
+  }
+
+  handleBtnClick() {
+    const action = {
+      type: "add_todo_item"
+    };
+    store.dispatch(action);
   }
   render() {
     return (
@@ -25,8 +40,11 @@ class TodoList extends Component {
             value={this.state.inputValue}
             placeholder="to do info"
             style={{ width: "300px", marginRight: "10px" }}
+            onChange={this.handleInputChange}
           />
-          <Button type="primary">Submit </Button>
+          <Button type="primary" onClick={this.handleBtnClick}>
+            Submit{" "}
+          </Button>
         </div>
         <List
           style={{ marginTop: "10px", width: "300px" }}
