@@ -6,9 +6,6 @@ import store from "./store";
 class TodoList extends Component {
   constructor(props) {
     super(props);
-    // console.log(store.getState());
-    /* store.getState() help to get the state from the store and the store get it from the reducer */
-
     this.state = store.getState();
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleStoreChange = this.handleStoreChange.bind(this);
@@ -35,25 +32,15 @@ class TodoList extends Component {
     };
     store.dispatch(action);
   }
-
-  handleItemDelete(index) {
-    // alert(index);
-
-    const action = {
-      type: "delete_todo_item",
-      index
-    };
-    store.dispatch(action);
-  }
   render() {
     return (
       <div style={{ marginTop: "10px", marginLeft: "10px" }}>
         <div>
           <Input
+            value={this.state.inputValue}
             placeholder="to do info"
             style={{ width: "300px", marginRight: "10px" }}
             onChange={this.handleInputChange}
-            value={this.state.inputValue}
           />
           <Button type="primary" onClick={this.handleBtnClick}>
             Submit{" "}
@@ -63,8 +50,8 @@ class TodoList extends Component {
           style={{ marginTop: "10px", width: "300px" }}
           bordered
           dataSource={this.state.list}
-          renderItem={(item, index) => (
-            <List.Item onClick={this.handleItemDelete.bind(this, index)}>
+          renderItem={item => (
+            <List.Item>
               <Typography.Text mark></Typography.Text> {item}
             </List.Item>
           )}
