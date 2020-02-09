@@ -1,17 +1,23 @@
+import {
+  CHANGE_INPUT_VALUE,
+  ADD_TODO_ITEM,
+  DELETE_TODO_ITEM
+} from "./actionType";
+
 const defaultState = {
   inputValue: "",
   list: []
 };
 
 export default (state = defaultState, action) => {
-  if (action.type === "change_input_value") {
+  if (action.type === CHANGE_INPUT_VALUE) {
     // console.log(action);
     const copyState = JSON.parse(JSON.stringify(state));
     copyState.inputValue = action.value;
     return copyState;
   }
 
-  if (action.type === "add_todo_item") {
+  if (action.type === ADD_TODO_ITEM) {
     console.log(action);
     const copyState = JSON.parse(JSON.stringify(state));
     copyState.list.push(state.inputValue);
@@ -19,7 +25,7 @@ export default (state = defaultState, action) => {
     return copyState;
   }
 
-  if (action.type === "delete_todo_item") {
+  if (action.type === DELETE_TODO_ITEM) {
     console.log(action);
     const copyState = JSON.parse(JSON.stringify(state));
     copyState.list.splice(action.index, 1);
