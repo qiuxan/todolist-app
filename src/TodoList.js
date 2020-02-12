@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Input, Button, List, Typography } from "antd";
 import store from "./store";
+import TodoListUI from "./TodoListUI";
 
 import {
   getInputChangeAction,
   getAddItemAction,
   getDeleteItemAction
 } from "./store/actionCreators";
-import // CHANGE_INPUT_VALUE,
-// ADD_TODO_ITEM,
-// DELETE_TODO_ITEM
-"./store/actionType";
 
 class TodoList extends Component {
   constructor(props) {
@@ -23,8 +19,20 @@ class TodoList extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleStoreChange = this.handleStoreChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
-
+    this.handleItemDelete = this.handleItemDelete.bind(this);
     store.subscribe(this.handleStoreChange);
+  }
+
+  render() {
+    return (
+      <TodoListUI
+        inputValue={this.state.inputValue}
+        handleInputChange={this.handleInputChange}
+        handleBtnClick={this.handleBtnClick}
+        list={this.state.list}
+        handleItemDelete={this.handleItemDelete}
+      />
+    );
   }
 
   handleStoreChange() {
@@ -44,33 +52,6 @@ class TodoList extends Component {
   handleItemDelete(index) {
     const action = getDeleteItemAction(index);
     store.dispatch(action);
-  }
-  render() {
-    return (
-      <div style={{ marginTop: "10px", marginLeft: "10px" }}>
-        <div>
-          <Input
-            placeholder="to do info"
-            style={{ width: "300px", marginRight: "10px" }}
-            onChange={this.handleInputChange}
-            value={this.state.inputValue}
-          />
-          <Button type="primary" onClick={this.handleBtnClick}>
-            Submit{" "}
-          </Button>
-        </div>
-        <List
-          style={{ marginTop: "10px", width: "300px" }}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item, index) => (
-            <List.Item onClick={this.handleItemDelete.bind(this, index)}>
-              <Typography.Text mark></Typography.Text> {item}
-            </List.Item>
-          )}
-        />
-      </div>
-    );
   }
 }
 
