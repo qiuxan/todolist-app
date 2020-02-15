@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import store from "./store";
 import TodoListUI from "./TodoListUI";
+import axios from "axios";
 
 import {
   getInputChangeAction,
   getAddItemAction,
-  getDeleteItemAction
+  getDeleteItemAction,
+  initListAction
 } from "./store/actionCreators";
 
 class TodoList extends Component {
@@ -33,6 +35,14 @@ class TodoList extends Component {
         handleItemDelete={this.handleItemDelete}
       />
     );
+  }
+
+  componentDidMount() {
+    axios.get("/list.json").then(res => {
+      const data = res.data;
+      const action = initListAction(data);
+      store.dispatch(action);
+    });
   }
 
   handleStoreChange() {
